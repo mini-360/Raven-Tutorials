@@ -2,10 +2,6 @@ import mongoose, { Schema } from "mongoose";
 
 const studentSchema = new Schema(
   {
-    username: {
-      type: String,
-      unique: true,
-    },
     email: {
       type: String,
       required: true,
@@ -57,10 +53,6 @@ const studentSchema = new Schema(
     },
     profileimage: {
       type: String, // cloudinary uri
-      required: true,
-    },
-    password: {
-      type: String,
       required: true,
     },
   },
