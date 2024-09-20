@@ -1,11 +1,23 @@
 import { Student } from "../models/student.models.js";
 import { ApiError } from "../utils/ApiError.js";
-import { ApiReponse } from "../utils/ApiResponse.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const registerStudent = async (req, res) => {
-  const response = req.body;
-  const studentData = JSON.parse(response.studentData);
+  // const response = req.body;
+
+  // let studentData;
+  // try {
+  //   studentData =
+  //     typeof response.studentData === "string"
+  //       ? JSON.parse(response.studentData)
+  //       : response.studentData;
+  //   if (!studentData) {
+  //     throw new ApiError(400, "Student data is missing from the request");
+  //   }
+  // } catch (error) {
+  //   throw new ApiError(400, "Invalid Data");
+  // }
 
   const {
     name,
@@ -20,7 +32,7 @@ const registerStudent = async (req, res) => {
     address,
     pincode,
     hobby,
-  } = studentData;
+  } = req.body;
   if (
     [
       name,
@@ -46,7 +58,7 @@ const registerStudent = async (req, res) => {
     throw new ApiError(409, "Student with email already exists");
   }
 
-  const photo = req.files.photo[0];
+  const photo = req.files.profileimage[0];
   const photoLocalPath = photo.path;
 
   if (!photoLocalPath) {
@@ -80,7 +92,7 @@ const registerStudent = async (req, res) => {
   if (!createdStudent) {
     throw new ApiError(500, "Something went wrong while registering");
   }
-  return res.status(201).json(new ApiReponse(200, createdStudent, "student"));
+  return res.status(201).json(new ApiResponse(200, createdStudent, "student"));
 };
 
 export { registerStudent };
