@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import "dotenv/config";
+import studentRouter from "./routes/student.routes.js";
 
 const app = express();
 
@@ -19,8 +20,7 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 app.use(cookieParser());
 
-import studentRouter from "./routes/student.routes.js";
 
-app.use("/api/v1/", studentRouter);
+app.use("/api", studentRouter);
 
 export default app;
